@@ -20,7 +20,7 @@ class Categories(models.Model):
 # Объявления
 class Announcement(models.Model):
     title = models.CharField(max_length=50)
-    # text скачай потом скорее markdownx штуку
+    text = models.TextField()
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
@@ -31,8 +31,8 @@ class Announcement(models.Model):
 
 # Отклики на объявления
 class Response(models.Model):
-    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    receiver = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='sender')
+    receiver = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='receiver')
     announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE)
     text = models.TextField()
     acceptance = models.BooleanField(default=False)
