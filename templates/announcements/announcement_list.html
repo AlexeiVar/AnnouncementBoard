@@ -1,5 +1,4 @@
 {% extends 'default.html' %}
-{% load partials %}
 {% block title %}
 AnnouncementList
 {% endblock title %}
@@ -18,7 +17,6 @@ AnnouncementList
                 </table>
                 <hr style="border: 2.5px solid black;">
             {% endfor %}
-        {% endpartialdef %}
     {% else %}
         <h4>Здесь пока пусто</h4>
     {% endif %}
