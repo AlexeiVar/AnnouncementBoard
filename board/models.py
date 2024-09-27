@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
@@ -12,7 +13,7 @@ class CustomUser(AbstractUser):
 class Categories(models.Model):
     name = models.CharField(max_length=25)
     subscribers = models.ManyToManyField(CustomUser, blank=True, related_name='categories')
-    
+
     def __str__(self):
         return self.name
 
@@ -27,6 +28,9 @@ class Announcement(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('announcement_detail', args=[str(self.id)])
 
 
 # Отклики на объявления

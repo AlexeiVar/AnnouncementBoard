@@ -1,0 +1,45 @@
+{% extends 'default.html' %}
+{% load partials %}
+{% block title %}
+AnnouncementList
+{% endblock title %}
+
+{% block content %}
+        <h1>Все объявления </h1>
+        <hr style="border: 2.5px solid black;">
+    {% if announcement_list %}
+            {% for announcement in announcement_list %}
+                <table align="center">
+                    <tr><th><h2><a href="{% url 'announcement_detail' announcement.id %}">{{ announcement.title }}</a></h2></th></tr>
+                    <tr><th>{{ announcement.text | safe | truncatechars_html:175}}</th></tr>
+                    <tr><th> Написанно: {{ announcement.creator }}</th></tr>
+                    <tr><th>для категории {{ announcement.category }}</th></tr>
+                    <tr><th> {{ announcement.date | date:'d M Y' }} </th></tr>
+                </table>
+                <hr style="border: 2.5px solid black;">
+            {% endfor %}
+        {% endpartialdef %}
+    {% else %}
+        <h4>Здесь пока пусто</h4>
+    {% endif %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+{% endblock content %}

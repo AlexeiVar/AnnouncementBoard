@@ -1,0 +1,15 @@
+{% extends 'default.html' %}
+
+{% block title %}
+AnnouncementDetail
+{% endblock title %}
+
+{% block content %}
+<h1>{{ announcement_detail.title }}</h1>
+<h2>Написанно: {{ announcement_detail.creator }}, для категории {{ announcement_detail.category }}</h2>
+<h3 style="text-align: left;">{{ announcement_detail.text | safe }}</h3>
+<hr>
+<p style="text-align: right;">{{ announcement_detail.date | date:'d M Y' }}</p>
+<button style="width:120px;">  <a href="{% url 'announcement_list' %}"> Подписаться на категорию {{ announcement_detail.category }}</a></button>
+<button style="width:120px;">  <a href="{% url 'announcement_list' %}"> Ответить на объявление</a></button>
+{% endblock content %}
