@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Уведомление</title>
+</head>
+<body>
+    <h2>Здравствуйте в категориях на которые вы подписаны были написаны новые объявления за неделю: </h2>
+    <ul>
+        {% for announcement in announcements %}
+        <li><a href="{{ link }}{{ announcement.get_absolute_url }}">{{ announcement.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>

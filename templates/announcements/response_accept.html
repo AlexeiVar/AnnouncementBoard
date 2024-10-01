@@ -1,0 +1,15 @@
+{% extends 'default.html' %}
+{% block content %}
+<h1>Принятие отклика.</h1>
+<hr>
+    {% if object.receiver == user and not object.acceptance %}
+        <p>Отклик от {{ object.sender }} был принят</p>
+        {{ object.accept }}
+    {% elif object.receiver == user and object.acceptance %}
+        <p>Вы уже приняли этот отклик</p>
+    {% else %}
+        <p>Отклики могут принимать только те, кому он был отправлен.</p>
+    {% endif %}
+    <a href="{% url 'responses' %}">Назад к откликам</a>
+
+{% endblock content %}

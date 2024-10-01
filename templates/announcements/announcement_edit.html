@@ -1,0 +1,18 @@
+{% extends 'default.html' %}
+{% block title %}
+AnnouncementEdit
+{% endblock title %}
+
+{% block content %}
+<h1>Редактирование объявления</h1>
+<hr>
+<form action="" method="post" > 
+    {% csrf_token %}
+    {% if object.creator == user %}
+        {{ form.as_p }}
+        <input type="submit" value="Save" />
+    {% else %}
+        <p>Объявления могут редактировать только те, кто их создал.</p>
+    {% endif %}
+</form>
+{% endblock content %}

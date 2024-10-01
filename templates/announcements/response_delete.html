@@ -1,0 +1,14 @@
+{% extends 'default.html' %}
+{% block content %}
+<h1>Удаление отклика.</h1>
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    {% if object.sender == user or object.receiver == user %}
+        <p>Удалить отклик от {{ object.sender }}?</p>
+        <input type="submit" value="Delete" />
+    {% else %}
+        <p>Отклики могут удалять только отправители или получатели.</p>
+    {% endif %}
+</form>
+{% endblock content %}

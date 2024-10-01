@@ -1,6 +1,6 @@
 from django import forms
 from django_summernote.fields import SummernoteTextField
-from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+from django_summernote.widgets import SummernoteWidget
 from .models import Announcement, Response
 
 
@@ -24,3 +24,6 @@ class ResponseForm(forms.ModelForm):
         fields = [
             'text',
         ]
+        widgets = {
+            'text': forms.Textarea(attrs={'class': 'form-control'}),
+        }

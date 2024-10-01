@@ -12,4 +12,4 @@ class AnnouncementAdmin(SummernoteModelAdmin):
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Response)
 admin.site.register(Announcement, AnnouncementAdmin)
-admin.site.register(Categories)
+admin.site.register(Category)

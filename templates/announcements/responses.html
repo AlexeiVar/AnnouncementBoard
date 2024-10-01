@@ -1,32 +1,44 @@
 {% extends 'default.html' %}
 {% block title %}
-AnnouncementList
+Responses
 {% endblock title %}
 
 {% load custom_tags %}
 
 {% block content %}
-        <h1>Все объявления </h1>
+        <h1>Отклики на ваши объявления </h1>
         <form action="" method="get">
             {{ filterset.form.as_p }}
             <input type="submit" value="Найти" />
         </form>
         <hr style="border: 2.5px solid black;">
-    {% if announcement_list %}
-            {% for announcement in announcement_list %}
-                <table align="center">
-                    <tr><th><h2><a href="{% url 'announcement_detail' announcement.id %}">{{ announcement.title }}</a></h2></th></tr>
-                    <tr><th>{{ announcement.text | safe | truncatechars_html:175}}</th></tr>
-                    <tr><th> Написанно: {{ announcement.creator }}</th></tr>
-                    <tr><th>для категории {{ announcement.category }}</th></tr>
-                    <tr><th> {{ announcement.date | date:'d M Y' }} </th></tr>
-                </table>
-                <hr style="border: 2.5px solid black;">
+    {% if responses %}
+        <table border="1">
+            <tr>
+                <th>Отправитель</th>
+                <th>Объявление</th>
+                <th>Текст</th>
+                <th>Принять</th>
+                <th>Удалить</th>
+            </tr>
+            {% for response in responses %}
+            <tr>
+                <th>{{ response.sender }}</th>
+                <th><a href="{% url 'announcement_detail' response.announcement.id %}">{{ response.announcement }}</a></th>
+                <th>{{ response.text }}</th>
+                {% if not response.acceptance %}
+                    <th><a href="{% url 'accept_response' response.id %}">Принять</a></th>
+                {% else %}
+                    <th>Принято</th>
+                {% endif %}
+                <th><a href="{% url 'delete_response' response.id %}">Удалить</a></th>
+            </tr>
+
             {% endfor %}
+        </table>
     {% else %}
         <h4>Здесь пока пусто</h4>
     {% endif %}
-    <a href="{% url 'announcement_create' %}">Создать объявление</a>
 
 <div class="pagination">
     <span class="step-links">

@@ -1,0 +1,18 @@
+{% extends 'default.html' %}
+{% block title %}
+CategoryList
+{% endblock title %}
+
+{% block content %}
+        <h1>Управление подписками</h1>
+        {% for category in category_list %}
+        {% if user not in category.subscribers.all %}
+            <a href="{% url 'subscribe' category.id %}">Подписаться на категорию: {{ category }}</a>
+            <br>
+        {% else %}
+            <a href="{% url 'unsubscribe' category.id %}">Отписаться от категории: {{ category }}</a>
+            <br>
+        {% endif %}
+        {% endfor %}
+
+{% endblock content %}

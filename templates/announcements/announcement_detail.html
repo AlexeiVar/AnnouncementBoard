@@ -7,9 +7,42 @@ AnnouncementDetail
 {% block content %}
 <h1>{{ announcement_detail.title }}</h1>
 <h2>Написанно: {{ announcement_detail.creator }}, для категории {{ announcement_detail.category }}</h2>
-<h3 style="text-align: left;">{{ announcement_detail.text | safe }}</h3>
+<h4 style="text-align: left;">{{ announcement_detail.text | safe }}</h4>
 <hr>
-<p style="text-align: right;">{{ announcement_detail.date | date:'d M Y' }}</p>
-<button style="width:120px;">  <a href="{% url 'announcement_list' %}"> Подписаться на категорию {{ announcement_detail.category }}</a></button>
-<button style="width:120px;">  <a href="{% url 'announcement_list' %}"> Ответить на объявление</a></button>
+<p style="text-align: right;">
+    {% if user == announcement_detail.creator %}
+        <a href="{% url 'announcement_delete' announcement_detail.id %}">Удалить</a>
+        <a href="{% url 'announcement_edit' announcement_detail.id %}">Редактировать</a>
+    {% endif %}
+    {{ announcement_detail.date | date:'d M Y' }}
+</p>
+<h2>Отклики</h2>
+<hr>
+{% with responses=announcement_detail.responses.all %}
+    <a href="{% url 'respond' announcement_detail.id %}">Откликнуться</a>
+    {% if not responses %}
+        <br> <br>
+        Откликов еще нет.
+    {% else %}
+        <br> <br>
+        {% for response in responses %}
+            <strong> {{ response.sender }} - {{ response.date | date:'d M Y' }} </strong>
+            <br>
+            {{ response.text }}
+            {% if response.acceptance %}
+                <br>
+                <strong> Отклик принят </strong>
+            {% elif user == announcement_detail.creator %}
+                <br>
+                <button><a href="{% url 'accept_response' response.id %}"> Принять </a></button>
+            {% endif %}
+            {% if user == response.sender or user == announcement_detail.creator %}
+                <br>
+                <button><a href="{% url 'delete_response' response.id %}"> Удалить </a></button>
+            {% endif %}
+            <br>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<hr>
 {% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'default.html' %}
+{% block content %}
+<h1>Удаление объявления.</h1>
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    {% if object.creator == user %}
+        <p>Удалить объявление {{ object.title }}?</p>
+        <input type="submit" value="Delete" />
+    {% else %}
+        <p>Объявления могут удалять только те, кто их создал.</p>
+    {% endif %}
+</form>
+{% endblock content %}
